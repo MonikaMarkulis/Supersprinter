@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    {% if story == None %}
+    <title>Add User Story</title>
+    {% else %}
+    <title>Edit User Story</title>
+    {% endif %}
+</head>
+
+<body>
+    {% if story == None %}
+    <h1>Add User Story</h1>
+    <form action="{{ url_for('add_user_story') }}" method="POST">
+        <label for="title">Story Title:</label>
+        <input name="title" id="title" type="text" minlength="5" maxlength="50" value="">
+        <br><br>
+        <label for="user_story">User Story:</label>
+        <textarea name="user_story" id="user_story" type="text" minlength="5" maxlength="200" value=""></textarea>
+        <br><br>
+        <label for="acceptance_criteria">Acceptance Criteria:</label>
+        <textarea name="acceptance_criteria" id="acceptance_criteria" type="text" minlength="5" maxlength="200"
+            value=""></textarea>
+        <br><br>
+        <label for="business_value">Business Value:</label>
+        <input name="business_value" id="business_value" type="number" min="10" max="1000000" value="">
+        <br><br>
+        <label for="estimation">Estimation:</label>
+        <input name="estimation" id="estimation" type="number" min="0" max="24" value="">
+        <br><br>
+        <button type="submit" value="Add User Story">Add User Story</button>
+    </form>
+    {% else %}
+    <h1>Edit User Story</h1>
+    <form action="{{ url_for('edit_user_story', id=story['id']) }}" method="POST">
+        <label for="title">Story Title:</label>
+        <input name="title" id="title" type="text" minlength="5" maxlength="50" value="{{story['title']}}">
+        <br><br>
+        <label for="user_story">User Story:</label>
+        <textarea name="user_story" id="user_story" type="text" minlength="5"
+            maxlength="200"> {{story[ "user_story" ]}} </textarea>
+        <br><br>
+        <label for="acceptance_criteria">Acceptance Criteria:</label>
+        <textarea name="acceptance_criteria" id="acceptance_criteria" type="text" minlength="5" maxlength="200">
+            {{story[ "acceptance_criteria" ]}} </textarea>
+        <br><br>
+        <label for="business_value">Business Value:</label>
+        <input name="business_value" id="business_value" type="number" min="10" max="1000000"
+            value="{{story['business_value']}}">
+        <br><br>
+        <label for="estimation">Estimation:</label>
+        <input name="estimation" id="estimation" type="number" min="0" max="24" value="{{story['estimation']}}">
+        <br><br>
+        <label for="status">Status</label>
+        <select name="status" id="status">
+            <option value="Planning">Planning</option>
+            <option value="ToDo">ToDo</option>
+            <option value="In progres">In progress</option>
+            <option value="Review">Review</option>
+            <option value="Done">Done</option>
+        </select>
+        <br><br>
+        <input name="Id" id="Id" type="hidden" value="{{story['id']}}">
+        <button type="submit" value="Update User Story">Edit User Story</button>
+    </form>
+    {% endif %}
+
+</body>
+
+</html>
